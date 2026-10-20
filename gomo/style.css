@@ -1,4 +1,4 @@
-/* Dùng chung cho mọi trang của Dzuy Phạm Store: token màu, chữ, header, nút, thẻ, footer. */
+/* Theme riêng của trang Gõ mõ hạ nghiệp: giấy cũ, gỗ, dấu son — lấy từ app. Trang cửa hàng có style riêng. */
 :root {
   --paper: #f3e8cf;
   --paper-2: #eadcbc;
