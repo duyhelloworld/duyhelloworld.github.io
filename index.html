@@ -111,7 +111,7 @@
         height: 52vmax;
         border-radius: 50%;
         filter: blur(90px);
-        opacity: 0.32;
+        opacity: 0.55;
         animation: troi 22s ease-in-out infinite alternate;
       }
       .aurora i:nth-child(1) {
@@ -130,7 +130,7 @@
         background: #db2777;
         left: 20vw;
         bottom: -30vmax;
-        opacity: 0.2;
+        opacity: 0.4;
         animation-duration: 34s;
         animation-delay: -12s;
       }
@@ -159,7 +159,7 @@
           #000 0%,
           transparent 70%
         );
-        opacity: 0.5;
+        opacity: 0.9;
       }
       .glow-cursor {
         position: fixed;
@@ -893,56 +893,6 @@
         }
       }
 
-      /* ---------- cách làm ---------- */
-      .how {
-        position: relative;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        counter-reset: how;
-      }
-      .how li {
-        position: relative;
-        padding: 30px 26px 28px;
-        border-radius: var(--r);
-        background: var(--card);
-        border: 1px solid var(--line);
-        counter-increment: how;
-        transition:
-          border-color 0.3s,
-          transform 0.4s var(--ease-out);
-      }
-      .how li:hover {
-        border-color: var(--line-2);
-        transform: translateY(-6px);
-      }
-      .how li::before {
-        content: "0" counter(how);
-        display: block;
-        margin-bottom: 18px;
-        font:
-          800 46px/1 "Be Vietnam Pro",
-          sans-serif;
-        letter-spacing: -0.04em;
-        background: linear-gradient(135deg, var(--violet), var(--cyan));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .how b {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 19px;
-        font-weight: 700;
-      }
-      .how span {
-        color: var(--ink-2);
-        font-size: 15px;
-      }
-
       /* ---------- liên hệ ---------- */
       .contact {
         position: relative;
@@ -1011,6 +961,31 @@
         gap: 12px;
       }
 
+
+      /* ---------- bổ sung: số to, gợi ý nghịch nền, liên hệ gọn ---------- */
+      .stats b {
+        font-size: clamp(44px, 8vw, 88px);
+        line-height: 1;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, #fff 20%, var(--cyan) 60%, var(--violet));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .stats b.chot { animation: chot 0.6s var(--spring); }
+      @keyframes chot { 40% { transform: scale(1.12); } }
+      .stats div { transition: background 0.3s; }
+      .stats div:hover { background: rgba(30, 24, 48, 0.85); }
+      .hint { margin: 22px 0 0; font: 500 13px var(--mono); color: var(--ink-2); display: flex; align-items: center; gap: 10px; }
+      .hint::before { content: ""; width: 26px; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan)); }
+      .hint .cham-tay { display: none; }
+      @media (hover: none) { .hint .chuot { display: none; } .hint .cham-tay { display: inline; } }
+      body.dang-giu { user-select: none; -webkit-user-select: none; cursor: grabbing; }
+      #apps h2 { margin-bottom: 36px; }
+      .contact { display: flex; flex-direction: column; align-items: center; text-align: center; padding: clamp(40px, 7vw, 80px) 24px; }
+      .contact .mail { font-size: clamp(20px, 4.4vw, 44px); }
+      .contact .small-links { margin-top: 18px; }
+
       @media (max-width: 760px) {
         nav {
           display: none;
@@ -1066,210 +1041,85 @@
           ><span class="mark" aria-hidden="true">D</span>Dzuy Phạm Store</a
         >
         <nav aria-label="Chính">
-          <a href="#apps">Ứng dụng</a><a href="#how">Làm kiểu gì</a
-          ><a href="#contact">Liên hệ</a>
+          <a href="#apps">Ứng dụng</a><a href="#contact">Liên hệ</a>
         </nav>
       </div>
     </header>
 
     <main id="main">
       <div class="wrap hero">
-        <p class="eyebrow fade" style="--d: 0ms">
-          <span class="dot" aria-hidden="true"></span>vibe coder · việt nam ·
-          đang build
-        </p>
-        <h1 aria-label="Thử đủ thứ. Cái nào chạy được thì lên store.">
+        <p class="eyebrow fade" style="--d: 0ms"><span class="dot" aria-hidden="true"></span>vibe coder · việt nam · đang build</p>
+        <h1 aria-label="Nghĩ ra là làm. Hôm nay: game, tiện ích, tài chính, gõ mõ…">
           <span aria-hidden="true">
-            <span class="w" style="--i: 0">Thử</span>
-            <span class="w" style="--i: 1">đủ</span>
-            <span class="w grad" style="--i: 2">thứ.</span><br />
-            <span class="w" style="--i: 3">Cái</span>
-            <span class="w" style="--i: 4">nào</span>
-            <span class="w" style="--i: 5">chạy</span>
-            <span class="w" style="--i: 6">được</span><br />
-            <span class="w" style="--i: 7">thì</span>
-            <span class="w" style="--i: 8"
-              ><span class="doi" id="doi"
-                ><span class="on grad">lên store.</span><span class="grad">ship luôn.</span
-                ><span class="grad">giữ lại.</span><span class="grad">khoe đây.</span></span
-              ></span
-            >
+            <span class="w" style="--i: 0">Nghĩ</span> <span class="w" style="--i: 1">ra</span> <span class="w" style="--i: 2">là</span> <span class="w grad" style="--i: 3">làm.</span><br />
+            <span class="w" style="--i: 4">Hôm nay:</span>
+            <span class="w" style="--i: 5"><span class="doi" id="doi"><span class="on grad">game nhỏ.</span><span class="grad">app tiện ích.</span><span class="grad">app tài chính.</span><span class="grad">app gõ mõ.</span><span class="grad">thứ chưa có tên.</span></span></span>
           </span>
         </h1>
-        <p class="lead fade" style="--d: 700ms">
-          Mình là một vibe coder người Việt: nảy ra ý tưởng, ngồi code cùng AI,
-          cầm <b>máy thật</b> bấm thử tới khi nó chạy. Cái nào qua được vòng đó
-          thì lên store và có mặt ở đây.
-        </p>
-        <div class="cta fade" style="--d: 850ms">
+        <p class="lead fade" style="--d: 600ms">Code cùng AI. Test bằng máy thật. Lên store.</p>
+        <div class="cta fade" style="--d: 750ms">
           <a class="btn btn-primary magnet" href="#apps">
-            Xem các app
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
+            Xem app
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
           </a>
-          <a class="btn btn-ghost magnet" href="#contact">Nhắn cho mình</a>
+          <a class="btn btn-ghost magnet" href="mailto:phamducduy2915@gmail.com">Nhắn mình</a>
         </div>
+        <p class="hint fade" style="--d: 1100ms" aria-hidden="true"><span class="chuot">bấm · giữ · rê chuột lên nền</span><span class="cham-tay">chạm · giữ lên nền</span></p>
 
         <div class="stats" data-reveal>
-          <div><b data-dem="1">0</b><span>app đã lên Google Play</span></div>
-          <div><b data-dem="18">0</b><span>ngôn ngữ đã dịch</span></div>
-          <div>
-            <b data-dem="805">0</b><span>test tự động trong app đầu</span>
-          </div>
+          <div><b data-dem="1">0</b><span>app trên Google Play</span></div>
+          <div><b data-dem="18">0</b><span>ngôn ngữ</span></div>
+          <div><b data-dem="805">0</b><span>test tự động</span></div>
         </div>
       </div>
 
       <div class="marquee" aria-hidden="true">
         <div class="track">
-          <span>Kotlin</span><span>Jetpack Compose</span
-          ><span>code cùng AI</span><span>test trên máy thật</span
-          ><span>Firebase</span><span>ship nhỏ, sửa nhanh</span
-          ><span>18 ngôn ngữ</span><span>Android trước, iOS sau</span>
-          <span>Kotlin</span><span>Jetpack Compose</span
-          ><span>code cùng AI</span><span>test trên máy thật</span
-          ><span>Firebase</span><span>ship nhỏ, sửa nhanh</span
-          ><span>18 ngôn ngữ</span><span>Android trước, iOS sau</span>
+          <span>game</span><span>tiện ích</span><span>tài chính</span><span>sức khoẻ</span><span>giải trí</span><span>widget</span><span>Kotlin</span><span>Compose</span><span>AI pair-coding</span>
+          <span>game</span><span>tiện ích</span><span>tài chính</span><span>sức khoẻ</span><span>giải trí</span><span>widget</span><span>Kotlin</span><span>Compose</span><span>AI pair-coding</span>
         </div>
       </div>
 
       <section id="apps">
         <div class="wrap">
-          <p class="kicker" data-reveal>// đã ra lò</p>
-          <h2 data-reveal style="--d: 60ms">Những thứ đã chạy được.</h2>
-          <p class="sub" data-reveal style="--d: 120ms">
-            Mỗi app một trang riêng, một màu riêng. Mấy cái khác vẫn đang nằm
-            trong lò — chưa ổn thì chưa ra.
-          </p>
-
+          <h2 data-reveal>Đã lên store.</h2>
           <ul class="app-grid">
             <li class="app-card" style="--accent: #e0a458" data-reveal>
               <div class="halo" aria-hidden="true"></div>
               <div class="shell">
                 <div class="cover">
                   <span class="tag-live">trên Google Play</span>
-                  <img
-                    src="gomo/img/gomo-co_tuong.jpg"
-                    width="506"
-                    height="900"
-                    alt=""
-                    loading="lazy"
-                  />
+                  <img src="gomo/img/gomo-co_tuong.jpg" width="506" height="900" alt="" loading="lazy" />
                 </div>
                 <div class="body">
-                  <img
-                    class="icon"
-                    src="gomo/img/gomo-icon.png"
-                    width="68"
-                    height="68"
-                    alt=""
-                  />
+                  <img class="icon" src="gomo/img/gomo-icon.png" width="68" height="68" alt="" />
                   <h3><a href="gomo/">Gõ mõ hạ nghiệp</a></h3>
                   <p class="tagline">Gõ một tiếng, đếm một tiếng.</p>
-                  <ul class="chips">
-                    <li>Android</li>
-                    <li>miễn phí</li>
-                    <li>10 bộ mõ</li>
-                    <li>widget</li>
-                  </ul>
+                  <ul class="chips"><li>Android</li><li>miễn phí</li><li>10 bộ mõ</li><li>widget</li></ul>
                   <div class="row">
-                    <a
-                      class="play"
-                      href="https://play.google.com/store/apps/details?id=com.duypd.gomo"
-                    >
-                      <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path
-                          fill="currentColor"
-                          d="M4 3.5v17a1 1 0 0 0 1.5.86l14.6-8.5a1 1 0 0 0 0-1.72L5.5 2.64A1 1 0 0 0 4 3.5Z"
-                        />
-                      </svg>
+                    <a class="play" href="https://play.google.com/store/apps/details?id=com.duypd.gomo">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3.5v17a1 1 0 0 0 1.5.86l14.6-8.5a1 1 0 0 0 0-1.72L5.5 2.64A1 1 0 0 0 4 3.5Z" /></svg>
                       Google Play
                     </a>
-                    <span class="more" aria-hidden="true"
-                      >gõ thử trên web
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.2"
-                        stroke-linecap="round"
-                      >
-                        <path d="M5 12h14M13 6l6 6-6 6" /></svg
-                    ></span>
+                    <span class="more" aria-hidden="true">gõ thử trên web <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                   </div>
                 </div>
               </div>
             </li>
             <li class="app-card soon" data-reveal style="--d: 120ms">
               <div class="shell">
-                <div class="lo" aria-hidden="true">
-                  <i></i><i></i><i></i><b>v0.1</b>
-                </div>
-                <h3>
-                  Đang trong lò<span class="cham" aria-hidden="true"></span>
-                </h3>
-                <p>
-                  App tiếp theo đang được bấm thử trên máy thật. Chưa ổn thì
-                  chưa ra.
-                </p>
+                <div class="lo" aria-hidden="true"><i></i><i></i><i></i><b>v0.1</b></div>
+                <h3>Đang trong lò<span class="cham" aria-hidden="true"></span></h3>
               </div>
             </li>
           </ul>
         </div>
       </section>
 
-      <section id="how">
-        <div class="wrap">
-          <p class="kicker" data-reveal>// làm kiểu gì</p>
-          <h2 data-reveal style="--d: 60ms">Ba luật, rút ra sau vài lần vỡ.</h2>
-          <p class="sub" data-reveal style="--d: 120ms">
-            Không có quy trình gì to tát.
-          </p>
-          <ol class="how">
-            <li data-reveal>
-              <b>Thử trước, nghĩ sau</b
-              ><span
-                >Ý tưởng nào hay hay thì dựng bản chạy được trước đã. Mockup đẹp
-                mà không bấm được thì chưa tính.</span
-              >
-            </li>
-            <li data-reveal style="--d: 100ms">
-              <b>Code cùng AI, test bằng tay</b
-              ><span
-                >AI viết nhanh, nhưng máy thật mới nói thật. Cái gì chưa cầm
-                điện thoại bấm qua thì chưa gọi là xong.</span
-              >
-            </li>
-            <li data-reveal style="--d: 200ms">
-              <b>Ship nhỏ, sửa nhanh</b
-              ><span
-                >Tester báo app sập trên Android đời cũ, bản vá ra ngay sau đó.
-                Lỗi thì có, giấu thì không.</span
-              >
-            </li>
-          </ol>
-        </div>
-      </section>
-
       <div class="wrap">
         <div class="contact" id="contact" data-reveal>
-          <p class="kicker">// liên hệ</p>
-          <h2>Báo lỗi, góp ý, hay chỉ muốn khoe số tiếng gõ.</h2>
-          <a class="mail" href="mailto:phamducduy2915@gmail.com"
-            >phamducduy2915@gmail.com</a
-          >
-          <div class="small-links">
-            <span>Chính sách riêng của từng app nằm ở trang app đó.</span>
-            <a href="app-ads.txt">app-ads.txt</a>
-          </div>
+          <a class="mail" href="mailto:phamducduy2915@gmail.com">phamducduy2915@gmail.com</a>
+          <div class="small-links"><a href="app-ads.txt">app-ads.txt</a></div>
         </div>
       </div>
     </main>
@@ -1287,13 +1137,8 @@
         const tinh = matchMedia("(hover: hover) and (pointer: fine)").matches; // chuột thật, không phải cảm ứng
         requestAnimationFrame(() => document.body.classList.add("ready"));
 
-        // header có viền khi đã cuộn
         const hd = document.querySelector("header");
-        addEventListener(
-          "scroll",
-          () => hd.classList.toggle("cuon", scrollY > 8),
-          { passive: true },
-        );
+        addEventListener("scroll", () => hd.classList.toggle("cuon", scrollY > 8), { passive: true });
 
         // chữ đổi trong tiêu đề
         const doi = document.getElementById("doi");
@@ -1308,51 +1153,44 @@
             ds[i].classList.remove("ra");
             ds[i].classList.add("on");
             setTimeout(() => cu.classList.remove("ra"), 650);
-          }, 2600);
+          }, 2200);
         }
 
-        // hiện dần khi cuộn tới + đếm số
+        // hiện dần khi cuộn tới + đếm số (chữ số xáo trộn rồi chốt)
         const dem = (el) => {
           const dich = +el.dataset.dem;
           if (giam) return (el.textContent = dich);
           const t0 = performance.now();
           (function b(t) {
-            const p = Math.min(1, (t - t0) / 1400);
+            const p = Math.min(1, (t - t0) / 1600);
             el.textContent = Math.round(dich * (1 - Math.pow(2, -10 * p)));
             if (p < 1) requestAnimationFrame(b);
+            else el.classList.add("chot");
           })(t0);
         };
         const io = new IntersectionObserver(
-          (es) =>
-            es.forEach((e) => {
-              if (!e.isIntersecting) return;
-              e.target.classList.add("in");
-              e.target.querySelectorAll("[data-dem]").forEach(dem);
-              io.unobserve(e.target);
-            }),
+          (es) => es.forEach((e) => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add("in");
+            e.target.querySelectorAll("[data-dem]").forEach(dem);
+            io.unobserve(e.target);
+          }),
           { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
         );
-        document
-          .querySelectorAll("[data-reveal]")
-          .forEach((el) => io.observe(el));
+        document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
 
-        // thẻ app: nghiêng 3D + đèn rọi theo con trỏ (chỉ với chuột)
+        // thẻ app: nghiêng 3D + đèn rọi theo con trỏ
         document.querySelectorAll(".app-card").forEach((c) => {
           c.addEventListener("pointermove", (e) => {
-            const r = c.getBoundingClientRect(),
-              x = (e.clientX - r.left) / r.width,
-              y = (e.clientY - r.top) / r.height;
+            const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
             c.style.setProperty("--mx", x * 100 + "%");
             c.style.setProperty("--my", y * 100 + "%");
             if (tinh && !giam && !c.classList.contains("soon")) {
               c.style.transition = "transform .12s ease-out";
-              c.style.transform = `rotateX(${(0.5 - y) * 9}deg) rotateY(${(x - 0.5) * 11}deg)`;
+              c.style.transform = `rotateX(${(0.5 - y) * 10}deg) rotateY(${(x - 0.5) * 12}deg)`;
             }
           });
-          c.addEventListener("pointerleave", () => {
-            c.style.transition = "";
-            c.style.transform = "";
-          });
+          c.addEventListener("pointerleave", () => { c.style.transition = ""; c.style.transform = ""; });
         });
 
         // nút hút theo con trỏ
@@ -1367,123 +1205,191 @@
 
         // quầng sáng đi theo con trỏ
         const g = document.querySelector(".glow-cursor");
-        let gx = innerWidth / 2,
-          gy = innerHeight / 3,
-          tx = gx,
-          ty = gy;
+        let gx = innerWidth / 2, gy = innerHeight / 3, tx = gx, ty = gy;
         if (tinh && !giam) {
-          addEventListener(
-            "pointermove",
-            (e) => {
-              tx = e.clientX;
-              ty = e.clientY;
-              g.style.opacity = 1;
-            },
-            { passive: true },
-          );
+          addEventListener("pointermove", (e) => { tx = e.clientX; ty = e.clientY; g.style.opacity = 1; }, { passive: true });
           (function theo() {
-            gx += (tx - gx) * 0.12;
-            gy += (ty - gy) * 0.12;
+            gx += (tx - gx) * 0.12; gy += (ty - gy) * 0.12;
             g.style.transform = `translate(${gx}px, ${gy}px)`;
             requestAnimationFrame(theo);
           })();
         }
 
-        // nền hạt sao: trôi chậm, nối dây với nhau và với con trỏ
-        const cv = document.getElementById("sao"),
-          cx = cv.getContext("2d");
-        let W,
-          H,
-          dpr,
-          hat = [],
-          px = -999,
-          py = -999;
+        /* ---------- nền: chòm sao tương tác ----------
+           rê   → dây nối từ con trỏ tới các hạt gần
+           bấm  → sóng xung kích đẩy hạt văng ra + tia lửa
+           giữ  → hố hút, hạt xoáy vào; thả → nổ, giữ càng lâu nổ càng to */
+        const cv = document.getElementById("sao"), cx = cv.getContext("2d");
+        const MAU = [268, 190, 325, 45]; // tím, xanh ngọc, hồng, vàng
+        let W, H, dpr, hat = [], lua = [], song = [], px = -1e4, py = -1e4;
+        let giu = null; // { t0, x, y } khi đang giữ
+
+        // sprite phát sáng vẽ sẵn cho từng màu — drawImage rẻ hơn shadowBlur rất nhiều
+        const sprite = {};
+        for (const h of MAU) {
+          const s = document.createElement("canvas"); s.width = s.height = 64;
+          const c = s.getContext("2d"), gr = c.createRadialGradient(32, 32, 0, 32, 32, 32);
+          gr.addColorStop(0, `hsla(${h},100%,92%,1)`);
+          gr.addColorStop(0.18, `hsla(${h},100%,70%,.9)`);
+          gr.addColorStop(0.45, `hsla(${h},100%,60%,.25)`);
+          gr.addColorStop(1, `hsla(${h},100%,60%,0)`);
+          c.fillStyle = gr; c.fillRect(0, 0, 64, 64);
+          sprite[h] = s;
+        }
+
         function dung() {
           dpr = Math.min(devicePixelRatio || 1, 2);
           W = cv.width = innerWidth * dpr;
           H = cv.height = innerHeight * dpr;
-          const n = Math.min(
-            90,
-            Math.round((innerWidth * innerHeight) / 16000),
-          );
-          hat = Array.from({ length: n }, () => ({
-            x: Math.random() * W,
-            y: Math.random() * H,
-            vx: (Math.random() - 0.5) * 0.25 * dpr,
-            vy: (Math.random() - 0.5) * 0.25 * dpr,
-            r: (Math.random() * 1.4 + 0.4) * dpr,
-            h: [263, 188, 330][Math.floor(Math.random() * 3)],
-          }));
+          const n = Math.min(tinh ? 150 : 75, Math.round((innerWidth * innerHeight) / 10000));
+          hat = Array.from({ length: n }, () => {
+            const a = Math.random() * 6.283, s = (Math.random() * 0.3 + 0.08) * dpr;
+            return { x: Math.random() * W, y: Math.random() * H, vx: 0, vy: 0, dx: Math.cos(a) * s, dy: Math.sin(a) * s,
+              r: (Math.random() * 1.6 + 0.9) * dpr, h: MAU[(Math.random() * MAU.length) | 0], tw: Math.random() * 6.283 };
+          });
         }
-        function ve() {
-          cx.clearRect(0, 0, W, H);
-          const lien = 120 * dpr;
+
+        function day(x, y, luc, R) { // đẩy hạt ra khỏi tâm (x,y)
           for (const p of hat) {
-            if (!giam) {
-              p.x += p.vx;
-              p.y += p.vy;
-              const dx = px - p.x,
-                dy = py - p.y,
-                d = Math.hypot(dx, dy);
-              if (d < 180 * dpr) {
-                p.x -= dx * 0.004;
-                p.y -= dy * 0.004;
-              } // né nhẹ con trỏ
-              if (p.x < 0) p.x += W;
-              if (p.x > W) p.x -= W;
-              if (p.y < 0) p.y += H;
-              if (p.y > H) p.y -= H;
-            }
-            cx.beginPath();
-            cx.arc(p.x, p.y, p.r, 0, 7);
-            cx.fillStyle = `hsla(${p.h},90%,75%,.8)`;
-            cx.fill();
+            const ddx = p.x - x, ddy = p.y - y, d = Math.hypot(ddx, ddy) || 1;
+            if (d < R) { const k = (1 - d / R) * luc; p.vx += (ddx / d) * k; p.vy += (ddy / d) * k; }
           }
-          for (let i = 0; i < hat.length; i++)
-            for (let j = i + 1; j < hat.length; j++) {
-              const a = hat[i],
-                b = hat[j],
-                d = Math.hypot(a.x - b.x, a.y - b.y);
-              if (d < lien) {
-                cx.strokeStyle = `rgba(167,139,250,${0.18 * (1 - d / lien)})`;
-                cx.lineWidth = dpr * 0.6;
-                cx.beginPath();
-                cx.moveTo(a.x, a.y);
-                cx.lineTo(b.x, b.y);
-                cx.stroke();
+        }
+        function no(x, y, manh) { // manh: 0..1
+          song.push({ x, y, t0: performance.now(), R: (240 + 420 * manh) * dpr, h: MAU[(Math.random() * MAU.length) | 0] });
+          day(x, y, (7 + 16 * manh) * dpr, (260 + 380 * manh) * dpr);
+          const so = 14 + Math.round(36 * manh);
+          for (let i = 0; i < so; i++) {
+            const a = Math.random() * 6.283, v = (Math.random() * 5 + 2) * dpr * (1 + manh);
+            lua.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, t0: performance.now(), song: 700 + Math.random() * 600, h: MAU[(Math.random() * MAU.length) | 0] });
+          }
+        }
+
+        function ve(t) {
+          cx.clearRect(0, 0, W, H);
+          const L = 130 * dpr;
+
+          // hố hút khi đang giữ
+          let manhGiu = 0;
+          if (giu) {
+            manhGiu = Math.min(1, Math.max(0, (t - giu.t0) / 1500)); // t của rAF có thể sớm hơn mốc bấm
+            for (const p of hat) {
+              const ddx = giu.x - p.x, ddy = giu.y - p.y, d = Math.hypot(ddx, ddy) || 1;
+              if (d < 520 * dpr) {
+                const f = (0.18 + 0.5 * manhGiu) * dpr * (1 - d / (520 * dpr));
+                p.vx += (ddx / d) * f - (ddy / d) * f * 0.9; // hút + xoáy
+                p.vy += (ddy / d) * f + (ddx / d) * f * 0.9;
               }
             }
+          }
+
           for (const p of hat) {
-            const d = Math.hypot(px - p.x, py - p.y);
-            if (d < 200 * dpr) {
-              cx.strokeStyle = `rgba(34,211,238,${0.35 * (1 - d / (200 * dpr))})`;
-              cx.lineWidth = dpr * 0.8;
-              cx.beginPath();
-              cx.moveTo(px, py);
-              cx.lineTo(p.x, p.y);
-              cx.stroke();
+            p.vx *= 0.94; p.vy *= 0.94; // tắt dần về trôi thường
+            p.x += p.vx + p.dx; p.y += p.vy + p.dy;
+            if (p.x < -20) p.x += W + 40; if (p.x > W + 20) p.x -= W + 40;
+            if (p.y < -20) p.y += H + 40; if (p.y > H + 20) p.y -= H + 40;
+          }
+
+          // dây nối giữa các hạt
+          cx.lineCap = "round";
+          for (let i = 0; i < hat.length; i++) {
+            const a = hat[i];
+            for (let j = i + 1; j < hat.length; j++) {
+              const b = hat[j], ddx = a.x - b.x;
+              if (ddx > L || ddx < -L) continue;
+              const d = Math.hypot(ddx, a.y - b.y);
+              if (d < L) {
+                cx.strokeStyle = `hsla(${a.h},90%,72%,${0.42 * (1 - d / L)})`;
+                cx.lineWidth = dpr;
+                cx.beginPath(); cx.moveTo(a.x, a.y); cx.lineTo(b.x, b.y); cx.stroke();
+              }
             }
           }
+          // dây từ con trỏ
+          const Lc = (giu ? 300 : 220) * dpr;
+          for (const p of hat) {
+            const d = Math.hypot(px - p.x, py - p.y);
+            if (d < Lc) {
+              cx.strokeStyle = `hsla(${p.h},100%,75%,${0.8 * (1 - d / Lc)})`;
+              cx.lineWidth = 1.3 * dpr;
+              cx.beginPath(); cx.moveTo(px, py); cx.lineTo(p.x, p.y); cx.stroke();
+            }
+          }
+
+          cx.globalCompositeOperation = "lighter";
+          // hạt phát sáng, nhấp nháy nhẹ
+          for (const p of hat) {
+            const k = p.r * (5.2 + Math.sin(t / 600 + p.tw) * 1.2);
+            cx.drawImage(sprite[p.h], p.x - k, p.y - k, k * 2, k * 2);
+          }
+          // tia lửa
+          for (let i = lua.length - 1; i >= 0; i--) {
+            const s = lua[i], p = Math.max(0, (t - s.t0) / s.song);
+            if (p >= 1) { lua.splice(i, 1); continue; }
+            s.vx *= 0.96; s.vy = s.vy * 0.96 + 0.06 * dpr; s.x += s.vx; s.y += s.vy;
+            const k = (1 - p) * 9 * dpr;
+            cx.globalAlpha = 1 - p;
+            cx.drawImage(sprite[s.h], s.x - k, s.y - k, k * 2, k * 2);
+          }
+          cx.globalAlpha = 1;
+          // sóng xung kích
+          for (let i = song.length - 1; i >= 0; i--) {
+            const s = song[i], p = Math.max(0, (t - s.t0) / 900);
+            if (p >= 1) { song.splice(i, 1); continue; }
+            const e = 1 - Math.pow(1 - p, 3);
+            cx.strokeStyle = `hsla(${s.h},100%,72%,${0.7 * (1 - p)})`;
+            cx.lineWidth = (6 * (1 - p) + 1) * dpr;
+            cx.beginPath(); cx.arc(s.x, s.y, 10 * dpr + s.R * e, 0, 6.283); cx.stroke();
+            cx.strokeStyle = `hsla(${s.h + 40},100%,80%,${0.35 * (1 - p)})`;
+            cx.lineWidth = 2 * dpr;
+            cx.beginPath(); cx.arc(s.x, s.y, 10 * dpr + s.R * e * 0.62, 0, 6.283); cx.stroke();
+          }
+          // lõi hố hút
+          if (giu) {
+            const r = (18 + 40 * manhGiu + Math.sin(t / 70) * 3 * manhGiu) * dpr;
+            const gr = cx.createRadialGradient(giu.x, giu.y, 0, giu.x, giu.y, r * 2.4);
+            gr.addColorStop(0, `rgba(255,255,255,${0.5 + 0.4 * manhGiu})`);
+            gr.addColorStop(0.3, `hsla(268,100%,70%,${0.45 + 0.3 * manhGiu})`);
+            gr.addColorStop(1, "hsla(190,100%,60%,0)");
+            cx.fillStyle = gr;
+            cx.beginPath(); cx.arc(giu.x, giu.y, r * 2.4, 0, 6.283); cx.fill();
+            cx.strokeStyle = `hsla(190,100%,75%,${0.3 + 0.5 * manhGiu})`;
+            cx.lineWidth = 2 * dpr;
+            cx.beginPath(); cx.arc(giu.x, giu.y, r * (1.6 + Math.sin(t / 120) * 0.15), 0, 6.283); cx.stroke();
+          }
+          cx.globalCompositeOperation = "source-over";
           if (!giam && !document.hidden) requestAnimationFrame(ve);
         }
+
         dung();
-        ve();
-        addEventListener("resize", () => {
-          dung();
-          if (giam) ve();
-        });
-        document.addEventListener("visibilitychange", () => {
-          if (!document.hidden && !giam) requestAnimationFrame(ve);
-        });
-        addEventListener(
-          "pointermove",
-          (e) => {
-            px = e.clientX * dpr;
-            py = e.clientY * dpr;
-          },
-          { passive: true },
-        );
-        addEventListener("pointerleave", () => (px = py = -999));
+        requestAnimationFrame(ve);
+        addEventListener("resize", () => { dung(); if (giam) requestAnimationFrame(ve); });
+        document.addEventListener("visibilitychange", () => { if (!document.hidden && !giam) requestAnimationFrame(ve); });
+
+        if (!giam) {
+          const laNut = (e) => e.target.closest("a, button, input, textarea, select, .app-card");
+          addEventListener("pointermove", (e) => {
+            px = e.clientX * dpr; py = e.clientY * dpr;
+            if (giu) { giu.x = px; giu.y = py; }
+          }, { passive: true });
+          addEventListener("pointerdown", (e) => {
+            if (laNut(e) || e.button > 0) return;
+            px = e.clientX * dpr; py = e.clientY * dpr;
+            giu = { t0: performance.now(), x: px, y: py };
+            document.body.classList.add("dang-giu");
+          });
+          const tha = (e, huy) => {
+            if (!giu) return;
+            const lau = performance.now() - giu.t0;
+            if (!huy) no(giu.x, giu.y, lau < 220 ? 0 : Math.min(1, lau / 1500));
+            giu = null;
+            document.body.classList.remove("dang-giu");
+            if (e.pointerType !== "mouse") px = py = -1e4; // cảm ứng: nhấc tay thì bỏ dây
+          };
+          addEventListener("pointerup", (e) => tha(e, false));
+          addEventListener("pointercancel", (e) => tha(e, true)); // vuốt cuộn trang → không nổ
+          document.documentElement.addEventListener("pointerleave", () => (px = py = -1e4));
+        }
       })();
     </script>
   </body>
