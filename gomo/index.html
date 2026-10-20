@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gõ mõ hạ nghiệp — Dzuy Phạm Store</title>
+    <meta
+      name="description"
+      content="Gõ mõ hạ nghiệp: chạm một cái, nghe một tiếng, con số nhích lên một. 10 bộ mõ, thống kê theo ngày, có widget màn hình chính."
+    />
+    <meta property="og:title" content="Gõ mõ hạ nghiệp" />
+    <meta
+      property="og:description"
+      content="Chạm một cái, nghe một tiếng, con số nhích lên một. 10 bộ mõ, có widget màn hình chính."
+    />
+    <meta
+      property="og:image"
+      content="https://duyhelloworld.github.io/gomo/img/gomo-co_tuong.jpg"
+    />
+    <link rel="icon" href="img/gomo-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/site.css" />
+    <style>
+      /* mõ gõ được */
+      .mo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        position: relative;
+      }
+      .counter {
+        display: grid;
+        place-items: center;
+        min-width: 104px;
+        height: 104px;
+        padding: 0 14px;
+        border-radius: 52px;
+        background: radial-gradient(circle at 35% 30%, #c9864f, #7e4b26);
+        border: 4px solid #c8a24a;
+        box-shadow: var(--shadow);
+        color: #fff3d6;
+        font:
+          700 34px/1 "Noto Serif",
+          serif;
+        font-variant-numeric: tabular-nums;
+      }
+      .counter-label {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        margin-bottom: 8px;
+      }
+      .tap {
+        border: 0;
+        background: none;
+        padding: 0;
+        cursor: pointer;
+        border-radius: 24px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .tap svg {
+        display: block;
+        width: min(270px, 66vw);
+        height: auto;
+        overflow: visible;
+      }
+      /* trục xoay lấy theo khung 280 của app (MoAnimationState): dùi quanh (235,66), thân nén quanh (140,205.3) */
+      #dui {
+        transform-box: view-box;
+        transform-origin: 235px 66px;
+      }
+      #than {
+        transform-box: view-box;
+        transform-origin: 140px 205.3px;
+      }
+      .float {
+        position: absolute;
+        left: 50%;
+        pointer-events: none;
+        white-space: nowrap;
+        font:
+          800 22px "Noto Serif",
+          Georgia,
+          serif;
+        color: #a8232b;
+        -webkit-text-stroke: 6px rgba(251, 246, 234, 0.95);
+        paint-order: stroke fill;
+      }
+      @media (prefers-color-scheme: dark) {
+        .float {
+          color: #ffd34d;
+          -webkit-text-stroke-color: rgba(40, 18, 6, 0.9);
+        }
+      }
+      .hint {
+        font-size: 14px;
+        color: var(--ink-2);
+        margin: 4px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Bỏ qua tới nội dung</a>
+    <header>
+      <div class="wrap">
+        <a class="brand" href="../"
+          ><span class="seal" aria-hidden="true">D</span>Dzuy Phạm Store</a
+        >
+        <nav aria-label="Chính">
+          <a href="../">Mọi app</a><a href="#apps">Có gì</a
+          ><a href="#legal">Chính sách</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap hero">
+        <div>
+          <p class="eyebrow">Android · Miễn phí</p>
+          <h1>Gõ mõ hạ nghiệp</h1>
+          <p class="lead">
+            Chạm một cái, nghe một tiếng, con số nhích lên một. Gõ cho việc gì
+            thì tạo mõ cho việc đó, cuối ngày xem mình đã gõ bao nhiêu.
+          </p>
+          <div class="cta">
+            <a
+              class="btn btn-primary"
+              href="https://play.google.com/store/apps/details?id=com.duypd.gomo"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M4 3.5v17a1 1 0 0 0 1.5.86l14.6-8.5a1 1 0 0 0 0-1.72L5.5 2.64A1 1 0 0 0 4 3.5Z"
+                />
+              </svg>
+              Tải trên Google Play
+            </a>
+            <a class="btn btn-ghost" href="#apps">Trong app có gì</a>
+          </div>
+        </div>
+
+        <div class="mo">
+          <div class="counter-label">Gõ thử một cái</div>
+          <div class="counter" id="count" aria-live="polite" aria-atomic="true">
+            0
+          </div>
+          <button
+            class="tap"
+            id="tap"
+            type="button"
+            aria-label="Gõ mõ, cộng một tiếng"
+          >
+            <!-- Chép từ HinhMo.kt của app: hệ 240 đặt lên khung 280 lệch (20,26), bộ màu MOC, đệm SON, dáng TRON -->
+            <svg
+              viewBox="0 0 280 280"
+              width="270"
+              height="270"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <defs>
+                <radialGradient id="go" cx=".36" cy=".28" r=".72">
+                  <stop offset="0" stop-color="#c59360" />
+                  <stop offset=".42" stop-color="#845938" />
+                  <stop offset="1" stop-color="#5b3a22" />
+                </radialGradient>
+                <radialGradient
+                  id="dem"
+                  gradientUnits="userSpaceOnUse"
+                  cx="98.8"
+                  cy="197.2"
+                  r="121.9"
+                >
+                  <stop offset="0" stop-color="#933f44" />
+                  <stop offset="1" stop-color="#621419" />
+                </radialGradient>
+                <radialGradient
+                  id="ao"
+                  gradientUnits="userSpaceOnUse"
+                  cx="142.8"
+                  cy="198.15"
+                  r="104.5"
+                >
+                  <stop offset="0" stop-color="#2a1a0f" stop-opacity=".3" />
+                  <stop offset="1" stop-color="#2a1a0f" stop-opacity="0" />
+                </radialGradient>
+                <radialGradient id="halo">
+                  <stop offset="0" stop-color="#fff" />
+                  <stop offset="1" stop-color="#fff" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="gocan" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#c08a52" />
+                  <stop offset="1" stop-color="#8b5e3c" />
+                </linearGradient>
+                <clipPath id="catThan">
+                  <path
+                    d="M25 145 C25 100 60 68 120 68 C180 68 215 100 215 145 C215 180 195 205 160 205 L80 205 C45 205 25 180 25 145 Z"
+                  />
+                </clipPath>
+              </defs>
+              <g transform="translate(20 26)">
+                <ellipse
+                  cx="120"
+                  cy="214"
+                  rx="112"
+                  ry="22"
+                  fill="#2a1a0f"
+                  opacity=".4"
+                />
+                <ellipse cx="120" cy="208" rx="106" ry="18" fill="url(#dem)" />
+                <g fill="#1c1a17">
+                  <ellipse
+                    cx="131.4"
+                    cy="215"
+                    rx="98.8"
+                    ry="14"
+                    opacity=".05"
+                  />
+                  <ellipse cx="131.4" cy="217" rx="76" ry="10" opacity=".12" />
+                  <ellipse cx="131.4" cy="219" rx="53.2" ry="7" opacity=".22" />
+                </g>
+              </g>
+              <g id="than">
+                <g transform="translate(20 26)">
+                  <ellipse cx="120" cy="66" rx="30" ry="19" fill="url(#go)" />
+                  <path
+                    fill="url(#go)"
+                    d="M25 145 C25 100 60 68 120 68 C180 68 215 100 215 145 C215 180 195 205 160 205 L80 205 C45 205 25 180 25 145 Z"
+                  />
+                  <g
+                    clip-path="url(#catThan)"
+                    fill="none"
+                    stroke-linecap="round"
+                  >
+                    <path
+                      d="M55 110 C 90 92 150 92 185 108"
+                      stroke="#5b3a22"
+                      stroke-width="3.2"
+                      opacity=".26"
+                    />
+                    <path
+                      d="M40 140 C 85 120 155 120 200 138"
+                      stroke="#5b3a22"
+                      stroke-width="2.2"
+                      opacity=".14"
+                    />
+                    <path
+                      d="M50 172 C 90 155 150 155 190 170"
+                      stroke="#2a1a0f"
+                      stroke-width="2.6"
+                      opacity=".22"
+                    />
+                    <path
+                      d="M64 126 C 96 114 144 114 176 124"
+                      stroke="#5b3a22"
+                      stroke-width="1.4"
+                      opacity=".12"
+                    />
+                    <rect
+                      x="25"
+                      y="68"
+                      width="190"
+                      height="137"
+                      fill="url(#ao)"
+                    />
+                  </g>
+                  <g fill="none" stroke-linecap="round">
+                    <path
+                      d="M70 180 C 95 196 145 196 170 180"
+                      stroke="#2a1a0f"
+                      stroke-width="26"
+                    />
+                    <path
+                      d="M70 171 C 95 187 145 187 170 171"
+                      stroke="#c08a52"
+                      stroke-width="2"
+                      opacity=".35"
+                    />
+                    <path
+                      d="M74 195 C 96 209 144 209 166 195"
+                      stroke="#c08a52"
+                      stroke-width="7"
+                      opacity=".85"
+                    />
+                    <path
+                      d="M66 178 C 46 172 32 182 36 196 C 39 207 54 210 61 200"
+                      stroke="#2a1a0f"
+                      stroke-width="13"
+                    />
+                    <path
+                      d="M66 172 C 46 166 32 176 36 190 C 39 201 54 204 61 194"
+                      stroke="#c08a52"
+                      stroke-width="1.6"
+                      opacity=".3"
+                    />
+                    <path
+                      d="M62 184 C 50 180 42 186 45 194"
+                      stroke="#c08a52"
+                      stroke-width="3.5"
+                      opacity=".55"
+                    />
+                  </g>
+                  <ellipse
+                    cx="110"
+                    cy="57"
+                    rx="12"
+                    ry="6.08"
+                    fill="url(#halo)"
+                    opacity=".3"
+                    transform="rotate(-15 110 57)"
+                  />
+                  <ellipse
+                    cx="80"
+                    cy="100"
+                    rx="38"
+                    ry="22"
+                    fill="url(#halo)"
+                    opacity=".22"
+                    transform="rotate(-20 80 100)"
+                  />
+                  <ellipse
+                    cx="67.84"
+                    cy="90.76"
+                    rx="14.44"
+                    ry="6.6"
+                    fill="url(#halo)"
+                    opacity=".32"
+                    transform="rotate(-26 67.84 90.76)"
+                  />
+                </g>
+              </g>
+              <g id="song"></g>
+              <g id="dui">
+                <g
+                  transform="translate(20 26) rotate(2.42 215 40) translate(215 40) scale(.809) translate(-215 -40)"
+                >
+                  <path
+                    fill="url(#gocan)"
+                    d="M102.74 35.82 L213.55 48.88 A9 9 0 0 0 216.45 31.12 L107.26 8.18 A14 14 0 0 1 102.74 35.82 Z"
+                  />
+                  <ellipse
+                    cx="100"
+                    cy="16"
+                    rx="23"
+                    ry="23"
+                    fill="url(#gocan)"
+                  />
+                  <ellipse
+                    cx="90"
+                    cy="6"
+                    rx="9"
+                    ry="5.5"
+                    fill="#fff"
+                    opacity=".24"
+                    transform="rotate(-25 90 6)"
+                  />
+                  <path
+                    d="M108 20 C 150 20 190 28 208 34"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    opacity=".16"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+          <p class="hint">Chạm vào mõ hoặc nhấn phím cách. Có tiếng đấy.</p>
+        </div>
+      </div>
+
+      <section id="apps">
+        <div class="wrap">
+          <h2 class="section-title">Trong app có gì</h2>
+          <p class="section-sub">
+            Không tài khoản, không mạng cũng gõ được. Số tiếng gõ nằm trên máy
+            của bạn.
+          </p>
+
+          <article class="app">
+            <ul class="chips" style="grid-column: 1 / -1; margin-top: 0">
+              <li>Android</li>
+              <li>Miễn phí</li>
+              <li>18 ngôn ngữ</li>
+              <li>Không cần tài khoản</li>
+            </ul>
+
+            <ul class="features">
+              <li>
+                <b>10 bộ mõ</b
+                ><span
+                  >Mõ chùa đêm rằm, heo đất ngày Tết, con dấu văn phòng 23h,
+                  thiên thạch lao vào Trái Đất… mỗi bộ một cảnh, một tiếng, một
+                  kiểu gõ.</span
+                >
+              </li>
+              <li>
+                <b>Mỗi việc một mõ</b
+                ><span
+                  >Gõ cho việc gì thì tạo mõ cho việc đó. Đặt tên riêng, đếm
+                  riêng.</span
+                >
+              </li>
+              <li>
+                <b>Thống kê theo ngày</b
+                ><span
+                  >Kỷ lục ngày, chuỗi ngày liên tiếp, cuối ngày kết sổ.</span
+                >
+              </li>
+              <li>
+                <b>Widget</b
+                ><span
+                  >Đặt mõ ra màn hình chính, gõ luôn không cần mở app.</span
+                >
+              </li>
+            </ul>
+
+            <div class="shots">
+              <img
+                src="img/gomo-co_tuong.jpg"
+                width="506"
+                height="900"
+                loading="lazy"
+                alt="Màn gõ mõ gỗ trên bàn cờ tướng, bộ đếm 128 tiếng hôm nay"
+              />
+              <img
+                src="img/gomo-tet.jpg"
+                width="506"
+                height="900"
+                loading="lazy"
+                alt="Bộ mõ Tết: heo đất và đồng xu"
+              />
+              <img
+                src="img/gomo-vu_tru.jpg"
+                width="506"
+                height="900"
+                loading="lazy"
+                alt="Bộ mõ Vũ trụ: thiên thạch lao vào Trái Đất"
+              />
+              <img
+                src="img/gomo-thong_ke.jpg"
+                width="506"
+                height="900"
+                loading="lazy"
+                alt="Màn thống kê số tiếng gõ theo ngày"
+              />
+              <img
+                src="img/gomo-ds_mo.jpg"
+                width="506"
+                height="900"
+                loading="lazy"
+                alt="Danh sách nhiều mõ riêng, mỗi mõ đếm riêng"
+              />
+            </div>
+
+            <div class="cta">
+              <a
+                class="btn btn-primary"
+                href="https://play.google.com/store/apps/details?id=com.duypd.gomo"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M4 3.5v17a1 1 0 0 0 1.5.86l14.6-8.5a1 1 0 0 0 0-1.72L5.5 2.64A1 1 0 0 0 4 3.5Z"
+                  />
+                </svg>
+                Tải trên Google Play
+              </a>
+              <a
+                class="btn btn-ghost"
+                href="https://sites.google.com/view/go-mo-privacy"
+                >Chính sách quyền riêng tư</a
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="legal">
+        <div class="wrap">
+          <h2 class="section-title">Phần nghiêm túc</h2>
+          <p class="section-sub">
+            Giấy tờ của Gõ mõ hạ nghiệp, và chỗ để nhắn mình. Ít chữ thôi, nhưng
+            nên đọc.
+          </p>
+          <div class="legal">
+            <a href="https://sites.google.com/view/go-mo-privacy"
+              ><b>Quyền riêng tư</b
+              ><span>App dùng dữ liệu gì, để làm gì.</span></a
+            >
+            <a href="https://sites.google.com/view/go-mo-tos"
+              ><b>Điều khoản sử dụng</b
+              ><span>Mấy điều cần biết khi dùng app.</span></a
+            >
+            <a href="mailto:phamducduy2915@gmail.com"
+              ><b>Liên hệ</b
+              ><span
+                >phamducduy2915@gmail.com — báo lỗi, góp ý, hay chỉ muốn khoe số
+                tiếng gõ.</span
+              ></a
+            >
+            <a href="../app-ads.txt"
+              ><b>app-ads.txt</b
+              ><span
+                >File cho hệ thống quảng cáo kiểm tra. Người thường không cần
+                mở.</span
+              ></a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span
+          >© 2026 Dzuy Phạm Store ·
+          <a href="mailto:phamducduy2915@gmail.com"
+            >phamducduy2915@gmail.com</a
+          ></span
+        >
+        <span>Một vibe coder Việt, thử mọi thứ — cái nào chạy thì giữ.</span>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const btn = document.getElementById("tap"),
+          out = document.getElementById("count"),
+          box = btn.parentElement;
+        const KEY = "gomo_web_count";
+        let n = 0;
+        try {
+          n = parseInt(localStorage.getItem(KEY) || "0", 10) || 0;
+        } catch (e) {}
+        out.textContent = n;
+        const giam = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const dui = document.getElementById("dui"),
+          than = document.getElementById("than"),
+          song = document.getElementById("song");
+        const SVG = "http://www.w3.org/2000/svg";
+
+        // Tiếng thật của app (res/raw/mo.wav). Tải sẵn bytes; giải mã khi có AudioContext (sau cú chạm đầu).
+        let ctx, buf, bytes;
+        fetch("snd/mo.wav")
+          .then((r) => r.arrayBuffer())
+          .then((b) => (bytes = b))
+          .catch(() => {});
+        function amThanh() {
+          ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+          if (ctx.state === "suspended") ctx.resume();
+          if (!buf && bytes) {
+            const b = bytes;
+            bytes = null;
+            ctx.decodeAudioData(
+              b,
+              (d) => (buf = d),
+              () => {},
+            );
+          }
+        }
+        function knock() {
+          try {
+            amThanh();
+            if (buf) {
+              const s = ctx.createBufferSource();
+              s.buffer = buf;
+              s.connect(ctx.destination);
+              s.start();
+              return;
+            }
+            // Dự phòng khi file chưa tải xong: tiếng tổng hợp.
+            const t = ctx.currentTime,
+              o = ctx.createOscillator(),
+              g = ctx.createGain();
+            o.type = "triangle";
+            o.frequency.setValueAtTime(820, t);
+            o.frequency.exponentialRampToValueAtTime(420, t + 0.12);
+            g.gain.setValueAtTime(0.0001, t);
+            g.gain.exponentialRampToValueAtTime(0.6, t + 0.004);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+            o.connect(g).connect(ctx.destination);
+            o.start(t);
+            o.stop(t + 0.25);
+          } catch (e) {}
+        }
+        function hit() {
+          n += 1;
+          out.textContent = n;
+          try {
+            localStorage.setItem(KEY, String(n));
+          } catch (e) {}
+          knock();
+          // Nhịp VUNG của app: thân nén rồi nảy (180ms) — giảm chuyển động thì chỉ giữ cái nhún này.
+          than.animate(
+            [
+              { transform: "none" },
+              { transform: "scale(1.055,.925)", offset: 0.28 },
+              { transform: "none" },
+            ],
+            { duration: 180, easing: "cubic-bezier(.34,1.56,.64,1)" },
+          );
+          if (!giam) {
+            dui.animate(
+              [
+                { transform: "none" },
+                { transform: "rotate(-13deg)", offset: 0.33 },
+                { transform: "none" },
+              ],
+              { duration: 180, easing: "cubic-bezier(.2,.8,.3,1)" },
+            );
+            vongSong();
+          }
+          bayChu();
+        }
+
+        // Vòng sóng vàng tâm (140,196): r 22→120 trong 400ms, mờ và mảnh dần.
+        function vongSong() {
+          const c = document.createElementNS(SVG, "circle");
+          c.setAttribute("cx", 140);
+          c.setAttribute("cy", 196);
+          c.setAttribute("fill", "none");
+          c.setAttribute("stroke", "#c9a227");
+          song.appendChild(c);
+          const t0 = performance.now();
+          (function ve(t) {
+            const p = Math.min(1, (t - t0) / 400);
+            c.setAttribute("r", 22 + 98 * (1 - Math.pow(1 - p, 3)));
+            c.setAttribute("stroke-opacity", 0.6 * (1 - p));
+            c.setAttribute("stroke-width", 3 * (1 - p / 2));
+            if (p < 1) requestAnimationFrame(ve);
+            else c.remove();
+          })(t0);
+        }
+
+        // "+1 công đức": bay lên 90 đơn vị (khung 280) trong 700ms, nảy cỡ ở 15% đầu, mờ sau 60%.
+        function bayChu() {
+          const svg = btn.firstElementChild,
+            u = svg.getBoundingClientRect().width / 280,
+            h = giam ? 0 : 90 * u;
+          const f = document.createElement("span");
+          f.className = "float";
+          f.textContent = "+1 công đức";
+          f.setAttribute("aria-hidden", "true");
+          f.style.top = btn.offsetTop + 70 * u + "px";
+          box.appendChild(f);
+          const y = (p) => -h * (1 - Math.pow(1 - p, 2));
+          f.animate(
+            [
+              { transform: "translate(-50%,0) scale(.8)", opacity: 1 },
+              {
+                transform: `translate(-50%,${y(0.15)}px) scale(1.05)`,
+                opacity: 1,
+                offset: 0.15,
+              },
+              {
+                transform: `translate(-50%,${y(0.6)}px) scale(1.023)`,
+                opacity: 1,
+                offset: 0.6,
+              },
+              { transform: `translate(-50%,${-h}px) scale(1)`, opacity: 0 },
+            ],
+            { duration: 700, fill: "forwards" },
+          ).onfinish = () => f.remove();
+        }
+        btn.addEventListener("click", hit);
+        document.addEventListener("keydown", (e) => {
+          if (e.code === "Space" && e.target === document.body) {
+            e.preventDefault();
+            hit();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
