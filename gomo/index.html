@@ -446,7 +446,7 @@
               </g>
             </svg>
           </button>
-          <p class="hint">Chạm vào mõ hoặc nhấn phím cách. Có tiếng đấy.</p>
+          <p class="hint" id="hint">Chạm vào mõ hoặc nhấn phím cách. Có tiếng đấy.</p>
         </div>
       </div>
 
@@ -588,15 +588,13 @@
     <dialog class="moi" id="moi" aria-labelledby="moi-tieude">
       <div class="so" aria-hidden="true">20</div>
       <h2 id="moi-tieude">20 tiếng rồi đấy.</h2>
-      <p>Gõ tiếp trên app: 10 bộ mõ, widget, thống kê.</p>
+      <p>Gõ tiếp trong app: 10 bộ mõ, widget, thống kê.</p>
       <a
         class="btn btn-primary"
         href="https://play.google.com/store/apps/details?id=com.duypd.gomo"
         >Mở Google Play</a
       >
-      <button class="btn btn-ghost" type="button" id="moi-dong">
-        Gõ tiếp ở đây
-      </button>
+      <button class="btn btn-ghost" type="button" id="moi-dong">Để sau</button>
     </dialog>
 
     <footer>
@@ -672,7 +670,28 @@
             o.stop(t + 0.25);
           } catch (e) {}
         }
+        // Web chỉ cho gõ thử GIOI_HAN tiếng (tính trên tổng đã lưu) — đủ thì khoá mõ, mời sang app.
+        const GIOI_HAN = 20,
+          moi = document.getElementById("moi"),
+          hint = document.getElementById("hint");
+        const khoa = () => n >= GIOI_HAN;
+        function danDauKhoa() {
+          hint.textContent = "Hết lượt gõ thử. Gõ tiếp trong app nhé.";
+          btn.setAttribute("aria-label", "Hết lượt gõ thử, mở lời mời gõ tiếp trong app");
+        }
+        if (khoa()) danDauKhoa();
+
+        function moiSangApp() {
+          if (moi.open || typeof moi.showModal !== "function") return;
+          moi.showModal();
+        }
+        document.getElementById("moi-dong").addEventListener("click", () => moi.close());
+        moi.addEventListener("click", (e) => {
+          if (e.target === moi) moi.close(); // bấm nền mờ thì đóng
+        });
+
         function hit() {
+          if (khoa()) return tuChoi();
           n += 1;
           out.textContent = n;
           try {
@@ -681,58 +700,68 @@
           knock();
           // Nhịp VUNG của app: thân nén rồi nảy (180ms) — giảm chuyển động thì chỉ giữ cái nhún này.
           than.animate(
-            [
-              { transform: "none" },
-              { transform: "scale(1.055,.925)", offset: 0.28 },
-              { transform: "none" },
-            ],
+            [{ transform: "none" }, { transform: "scale(1.055,.925)", offset: 0.28 }, { transform: "none" }],
             { duration: 180, easing: "cubic-bezier(.34,1.56,.64,1)" },
           );
           if (!giam) {
             dui.animate(
-              [
-                { transform: "none" },
-                { transform: "rotate(-13deg)", offset: 0.33 },
-                { transform: "none" },
-              ],
+              [{ transform: "none" }, { transform: "rotate(-13deg)", offset: 0.33 }, { transform: "none" }],
               { duration: 180, easing: "cubic-bezier(.2,.8,.3,1)" },
             );
             vongSong();
           }
           bayChu();
-          // Đếm theo lần mở trang, không theo tổng đã lưu — người quay lại không bị bật popup ngay cú đầu.
-          if (++phien === MOI_SAU) setTimeout(moiSangApp, 650); // chờ chữ "+1" bay xong
+          if (khoa()) datGioiHan();
         }
 
-        const MOI_SAU = 20,
-          moi = document.getElementById("moi");
-        let phien = 0;
-        function moiSangApp() {
-          if (moi.open || typeof moi.showModal !== "function") return;
-          moi.showModal();
+        // Cú thứ 20: ăn mừng — ba vòng sóng vàng lan rộng, bộ đếm nảy, mõ phồng nhẹ — rồi mới mời.
+        function datGioiHan() {
+          danDauKhoa();
+          if (!giam) {
+            [0, 140, 280].forEach((d, i) => setTimeout(() => vongSong(170 + i * 40, 900, "#e8b93a", 5), 120 + d));
+            than.animate(
+              [{ transform: "none" }, { transform: "scale(1.09)", offset: 0.35 }, { transform: "none" }],
+              { duration: 620, delay: 200, easing: "cubic-bezier(.34,1.56,.64,1)" },
+            );
+          }
+          out.animate(
+            [{ transform: "none" }, { transform: "scale(1.25)", boxShadow: "0 0 0 10px rgba(232,185,58,.35)", offset: 0.4 }, { transform: "none" }],
+            { duration: 700, delay: 150, easing: "cubic-bezier(.34,1.56,.64,1)" },
+          );
+          setTimeout(moiSangApp, giam ? 300 : 1100);
         }
-        document
-          .getElementById("moi-dong")
-          .addEventListener("click", () => moi.close());
-        // bấm ra ngoài thẻ (vào nền mờ) thì đóng
-        moi.addEventListener("click", (e) => {
-          if (e.target === moi) moi.close();
-        });
+
+        // Gõ khi đã khoá: không đếm, không kêu — mõ và bộ đếm lắc đầu, rồi mời lại.
+        function tuChoi() {
+          const lac = [
+            { transform: "none" },
+            { transform: "translateX(-10px) rotate(-3deg)" },
+            { transform: "translateX(9px) rotate(3deg)" },
+            { transform: "translateX(-6px) rotate(-2deg)" },
+            { transform: "translateX(4px)" },
+            { transform: "none" },
+          ];
+          if (!giam) {
+            btn.firstElementChild.animate(lac, { duration: 420, easing: "ease-out" });
+            out.animate(lac, { duration: 420, easing: "ease-out" });
+          }
+          setTimeout(moiSangApp, giam ? 0 : 380);
+        }
 
         // Vòng sóng vàng tâm (140,196): r 22→120 trong 400ms, mờ và mảnh dần.
-        function vongSong() {
+        function vongSong(r1 = 120, ms = 400, mau = "#c9a227", net = 3) {
           const c = document.createElementNS(SVG, "circle");
           c.setAttribute("cx", 140);
           c.setAttribute("cy", 196);
           c.setAttribute("fill", "none");
-          c.setAttribute("stroke", "#c9a227");
+          c.setAttribute("stroke", mau);
           song.appendChild(c);
           const t0 = performance.now();
           (function ve(t) {
-            const p = Math.min(1, (t - t0) / 400);
-            c.setAttribute("r", 22 + 98 * (1 - Math.pow(1 - p, 3)));
+            const p = Math.min(1, Math.max(0, (t - t0) / ms));
+            c.setAttribute("r", 22 + (r1 - 22) * (1 - Math.pow(1 - p, 3)));
             c.setAttribute("stroke-opacity", 0.6 * (1 - p));
-            c.setAttribute("stroke-width", 3 * (1 - p / 2));
+            c.setAttribute("stroke-width", net * (1 - p / 2));
             if (p < 1) requestAnimationFrame(ve);
             else c.remove();
           })(t0);
