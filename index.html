@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dzuy Phạm Store</title>
-<meta name="description" content="Dzuy Phạm Store — ứng dụng Android nhỏ, làm kỹ. Gõ mõ hạ nghiệp: gõ một tiếng, đếm một tiếng.">
-<meta property="og:title" content="Dzuy Phạm Store">
-<meta property="og:description" content="Gõ mõ hạ nghiệp — gõ một tiếng, đếm một tiếng. 10 bộ mõ, có widget màn hình chính.">
+<meta name="description" content="Một vibe coder người Việt thử đủ thứ, cái nào chạy được thì đưa lên store. App đầu tiên: Gõ mõ hạ nghiệp.">
+<meta property="og:title" content="Dzuy Phạm Store — vibe coder Việt thử đủ thứ">
+<meta property="og:description" content="Gõ mõ hạ nghiệp: chạm một cái, nghe một tiếng, con số nhích lên một. 10 bộ mõ, có widget màn hình chính.">
 <meta property="og:image" content="https://duyhelloworld.github.io/img/gomo-co_tuong.jpg">
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -115,7 +115,13 @@ section{padding:56px 0}
 .shots img{width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:14px;border:1px solid var(--line);background:var(--paper-2)}
 .app .cta{grid-column:1/-1;margin-top:8px}
 
-.legal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0;padding:0;list-style:none;counter-reset:how}
+.how li{position:relative;padding:22px 20px 20px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);counter-increment:how}
+.how li::before{content:counter(how);position:absolute;top:-14px;left:20px;display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--seal);color:var(--seal-ink);font:700 15px/1 "Noto Serif",serif;transform:rotate(-4deg)}
+.how b{display:block;font-family:"Noto Serif",serif;font-size:18px;margin:4px 0}
+.how span{font-size:15px;color:var(--ink-2)}
+.legal{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.legal span{overflow-wrap:anywhere}
 .legal a{
   display:block;padding:20px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);
   text-decoration:none;transition:border-color .2s ease
@@ -134,7 +140,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
   .features{grid-template-columns:repeat(2,1fr)}
   .shots{grid-template-columns:repeat(5,60%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
   .shots img{scroll-snap-align:start}
-  .legal{grid-template-columns:1fr}
+  .legal,.how{grid-template-columns:1fr}
+  .how{gap:24px}
 }
 @media (max-width:520px){
   .wrap{padding:0 16px}
@@ -152,39 +159,39 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 <header>
   <div class="wrap">
     <a class="brand" href="./"><span class="seal" aria-hidden="true">D</span>Dzuy Phạm Store</a>
-    <nav aria-label="Chính"><a href="#apps">Ứng dụng</a><a href="#legal">Chính sách</a></nav>
+    <nav aria-label="Chính"><a href="#apps">Đã ra lò</a><a href="#how">Làm kiểu gì</a><a href="#legal">Chính sách</a></nav>
   </div>
 </header>
 
 <main id="main">
   <div class="wrap hero">
     <div>
-      <p class="eyebrow">Nhà phát triển Android</p>
-      <h1>Ứng dụng nhỏ, làm kỹ từng tiếng gõ.</h1>
-      <p class="lead">Mình làm app một mình. Ứng dụng đầu tiên là <strong>Gõ mõ hạ nghiệp</strong> — chạm vào mõ, nghe một tiếng, con số nhích lên một.</p>
+      <p class="eyebrow">Vibe coder · Việt Nam</p>
+      <h1>Thử đủ thứ. Cái nào chạy được thì lên store.</h1>
+      <p class="lead">Mình là một vibe coder người Việt: nảy ra ý tưởng, ngồi code cùng AI, cầm máy thật bấm thử tới khi nó chạy. App đầu tiên lọt được lên Google Play là <strong>Gõ mõ hạ nghiệp</strong>.</p>
       <div class="cta">
         <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.duypd.gomo">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3.5v17a1 1 0 0 0 1.5.86l14.6-8.5a1 1 0 0 0 0-1.72L5.5 2.64A1 1 0 0 0 4 3.5Z"/></svg>
           Tải trên Google Play
         </a>
-        <a class="btn btn-ghost" href="#apps">Xem ứng dụng</a>
+        <a class="btn btn-ghost" href="#apps">Xem đang có gì</a>
       </div>
     </div>
 
     <div class="mo">
-      <div class="counter-label">Thử gõ ngay</div>
+      <div class="counter-label">Gõ thử một cái</div>
       <div class="counter" id="count" aria-live="polite" aria-atomic="true">0</div>
       <button class="tap" id="tap" type="button" aria-label="Gõ mõ, cộng một tiếng">
         <img src="img/gomo-mo.png" width="271" height="294" alt="">
       </button>
-      <p class="hint">Chạm vào mõ (hoặc nhấn phím cách)</p>
+      <p class="hint">Chạm vào mõ hoặc nhấn phím cách. Có tiếng đấy.</p>
     </div>
   </div>
 
   <section id="apps">
     <div class="wrap">
-      <h2 class="section-title">Ứng dụng</h2>
-      <p class="section-sub">Hiện có một ứng dụng trên Google Play. Các ứng dụng khác đang làm.</p>
+      <h2 class="section-title">Đã ra lò</h2>
+      <p class="section-sub">Một app đã lên Google Play. Mấy cái khác vẫn đang nằm trong lò thử — chưa ổn thì chưa ra.</p>
 
       <article class="app">
         <img class="app-icon" src="img/gomo-icon.png" width="88" height="88" alt="Biểu tượng Gõ mõ hạ nghiệp">
@@ -195,10 +202,10 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
         </div>
 
         <ul class="features">
-          <li><b>10 bộ mõ</b><span>Mỗi bộ một khung cảnh, một tiếng gõ, một hoạt ảnh riêng — từ mõ chùa tới heo đất ngày Tết.</span></li>
-          <li><b>Nhiều mõ riêng</b><span>Mỗi việc một mõ, đặt tên riêng, đếm riêng.</span></li>
-          <li><b>Thống kê theo ngày</b><span>Kỷ lục, chuỗi ngày liên tiếp, kết sổ cuối ngày.</span></li>
-          <li><b>Widget</b><span>Gõ ngay trên màn hình chính, không cần mở app.</span></li>
+          <li><b>10 bộ mõ</b><span>Mõ chùa đêm rằm, heo đất ngày Tết, con dấu văn phòng 23h, thiên thạch lao vào Trái Đất… mỗi bộ một cảnh, một tiếng, một kiểu gõ.</span></li>
+          <li><b>Mỗi việc một mõ</b><span>Gõ cho việc gì thì tạo mõ cho việc đó. Đặt tên riêng, đếm riêng.</span></li>
+          <li><b>Thống kê theo ngày</b><span>Kỷ lục ngày, chuỗi ngày liên tiếp, cuối ngày kết sổ.</span></li>
+          <li><b>Widget</b><span>Đặt mõ ra màn hình chính, gõ luôn không cần mở app.</span></li>
         </ul>
 
         <div class="shots">
@@ -220,14 +227,27 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
     </div>
   </section>
 
+  <section id="how">
+    <div class="wrap">
+      <h2 class="section-title">Làm kiểu gì</h2>
+      <p class="section-sub">Không có quy trình gì to tát. Chỉ có mấy luật tự đặt ra sau vài lần vỡ.</p>
+      <ol class="how">
+        <li><b>Thử trước, nghĩ sau</b><span>Ý tưởng nào hay hay thì dựng bản chạy được trước đã. Mockup đẹp mà không bấm được thì chưa tính.</span></li>
+        <li><b>Code cùng AI, test bằng tay</b><span>AI viết nhanh, nhưng máy thật mới nói thật. Cái gì chưa cầm điện thoại bấm qua thì chưa gọi là xong.</span></li>
+        <li><b>Ship nhỏ, sửa nhanh</b><span>Tester báo app sập trên Android đời cũ, bản vá ra ngay sau đó. Lỗi thì có, giấu thì không.</span></li>
+      </ol>
+    </div>
+  </section>
+
   <section id="legal">
     <div class="wrap">
-      <h2 class="section-title">Chính sách</h2>
-      <p class="section-sub">Tài liệu pháp lý của Gõ mõ hạ nghiệp.</p>
+      <h2 class="section-title">Phần nghiêm túc</h2>
+      <p class="section-sub">Giấy tờ của Gõ mõ hạ nghiệp, và chỗ để nhắn mình. Ít chữ thôi, nhưng nên đọc.</p>
       <div class="legal">
-        <a href="https://sites.google.com/view/go-mo-privacy"><b>Quyền riêng tư</b><span>Dữ liệu nào được dùng và vì sao.</span></a>
-        <a href="https://sites.google.com/view/go-mo-tos"><b>Điều khoản sử dụng</b><span>Điều kiện khi dùng ứng dụng.</span></a>
-        <a href="app-ads.txt"><b>app-ads.txt</b><span>Danh sách bên bán quảng cáo được uỷ quyền.</span></a>
+        <a href="https://sites.google.com/view/go-mo-privacy"><b>Quyền riêng tư</b><span>App dùng dữ liệu gì, để làm gì.</span></a>
+        <a href="https://sites.google.com/view/go-mo-tos"><b>Điều khoản sử dụng</b><span>Mấy điều cần biết khi dùng app.</span></a>
+        <a href="mailto:phamducduy2915@gmail.com"><b>Liên hệ</b><span>phamducduy2915@gmail.com — báo lỗi, góp ý, hay chỉ muốn khoe số tiếng gõ.</span></a>
+        <a href="app-ads.txt"><b>app-ads.txt</b><span>File cho hệ thống quảng cáo kiểm tra. Người thường không cần mở.</span></a>
       </div>
     </div>
   </section>
@@ -235,8 +255,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Dzuy Phạm Store</span>
-    <span>Làm ở Việt Nam, gõ từng tiếng một.</span>
+    <span>© 2026 Dzuy Phạm Store · <a href="mailto:phamducduy2915@gmail.com">phamducduy2915@gmail.com</a></span>
+    <span>Một vibe coder Việt, thử mọi thứ — cái nào chạy thì giữ.</span>
   </div>
 </footer>
 
