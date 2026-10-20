@@ -961,6 +961,28 @@
         gap: 12px;
       }
 
+      /* ---------- nav: nút viên thuốc rõ ràng (ghi đè kiểu chữ trơn + gạch chân khi rê) ---------- */
+      nav { gap: 8px; }
+      nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 0 16px;
+        border: 1px solid var(--line-2);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--ink);
+        font-weight: 600;
+        transition: border-color 0.25s, background 0.25s, box-shadow 0.25s, transform 0.15s;
+      }
+      nav a::after { display: none; }
+      nav a:hover {
+        border-color: var(--cyan);
+        background: rgba(34, 211, 238, 0.1);
+        box-shadow: 0 0 18px -4px rgba(34, 211, 238, 0.6);
+      }
+      nav a:active { transform: scale(0.96); }
+
       /* ---------- bổ sung: số to, gợi ý nghịch nền, liên hệ gọn ---------- */
       .stats b {
         font-size: clamp(44px, 8vw, 88px);

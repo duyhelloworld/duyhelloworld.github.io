@@ -105,6 +105,78 @@
         color: var(--ink-2);
         margin: 4px 0 0;
       }
+
+      /* Popup mời sang app sau 20 tiếng gõ trong một lần mở trang */
+      .moi {
+        width: min(340px, calc(100vw - 32px));
+        padding: 28px 24px 22px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--card);
+        color: var(--ink);
+        box-shadow: 0 24px 60px rgba(40, 20, 8, 0.35);
+        text-align: center;
+      }
+      .moi::backdrop {
+        background: rgba(30, 18, 10, 0.45);
+        backdrop-filter: blur(4px);
+      }
+      .moi[open] {
+        animation: moi-vao 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .moi[open]::backdrop {
+        animation: moi-mo 0.3s ease-out;
+      }
+      @keyframes moi-vao {
+        from {
+          opacity: 0;
+          transform: translateY(24px) scale(0.92);
+        }
+      }
+      @keyframes moi-mo {
+        from {
+          opacity: 0;
+        }
+      }
+      .moi .so {
+        display: grid;
+        place-items: center;
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, #c9864f, #7e4b26);
+        border: 4px solid #c8a24a;
+        color: #fff3d6;
+        font:
+          700 34px/1 "Noto Serif",
+          serif;
+      }
+      .moi h2 {
+        font-size: 22px;
+        margin: 0 0 6px;
+      }
+      .moi p {
+        margin: 0 0 20px;
+        color: var(--ink-2);
+        font-size: 15px;
+      }
+      .moi .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .moi .btn + .btn {
+        margin-top: 8px;
+      }
+      /* <button> mang nền/font mặc định của trình duyệt — đưa về kiểu nút viền như .btn-ghost */
+      .moi button.btn {
+        background: transparent;
+        border: 1.5px solid var(--line);
+        color: var(--ink);
+        font: inherit;
+        font-weight: 600;
+      }
+      .moi button.btn:hover { border-color: var(--ink-2); }
     </style>
   </head>
   <body>
@@ -115,7 +187,7 @@
           ><span class="seal" aria-hidden="true">D</span>Dzuy Phạm Store</a
         >
         <nav aria-label="Chính">
-          <a href="../">Mọi app</a><a href="#apps">Có gì</a
+          <a class="ve" href="../">Mọi app</a><a href="#apps">Có gì</a
           ><a href="#legal">Chính sách</a>
         </nav>
       </div>
@@ -513,6 +585,20 @@
       </section>
     </main>
 
+    <dialog class="moi" id="moi" aria-labelledby="moi-tieude">
+      <div class="so" aria-hidden="true">20</div>
+      <h2 id="moi-tieude">20 tiếng rồi đấy.</h2>
+      <p>Gõ tiếp trên app: 10 bộ mõ, widget, thống kê.</p>
+      <a
+        class="btn btn-primary"
+        href="https://play.google.com/store/apps/details?id=com.duypd.gomo"
+        >Mở Google Play</a
+      >
+      <button class="btn btn-ghost" type="button" id="moi-dong">
+        Gõ tiếp ở đây
+      </button>
+    </dialog>
+
     <footer>
       <div class="wrap">
         <span
@@ -614,7 +700,24 @@
             vongSong();
           }
           bayChu();
+          // Đếm theo lần mở trang, không theo tổng đã lưu — người quay lại không bị bật popup ngay cú đầu.
+          if (++phien === MOI_SAU) setTimeout(moiSangApp, 650); // chờ chữ "+1" bay xong
         }
+
+        const MOI_SAU = 20,
+          moi = document.getElementById("moi");
+        let phien = 0;
+        function moiSangApp() {
+          if (moi.open || typeof moi.showModal !== "function") return;
+          moi.showModal();
+        }
+        document
+          .getElementById("moi-dong")
+          .addEventListener("click", () => moi.close());
+        // bấm ra ngoài thẻ (vào nền mờ) thì đóng
+        moi.addEventListener("click", (e) => {
+          if (e.target === moi) moi.close();
+        });
 
         // Vòng sóng vàng tâm (140,196): r 22→120 trong 400ms, mờ và mảnh dần.
         function vongSong() {
