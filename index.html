@@ -893,6 +893,104 @@
         }
       }
 
+      /* ---------- tình trạng app ---------- */
+      .tag-live.test::before {
+        background: #fbbf24;
+        box-shadow: 0 0 10px #fbbf24;
+      }
+      .steps {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin: 18px 0 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: buoc;
+      }
+      .steps li {
+        font: 500 11px var(--mono);
+        color: var(--ink-2);
+        opacity: 0.55;
+      }
+      .steps li::before {
+        content: "";
+        display: block;
+        height: 4px;
+        margin-bottom: 7px;
+        border-radius: 999px;
+        background: var(--line-2);
+      }
+      .steps .done,
+      .steps .now {
+        opacity: 1;
+      }
+      .steps .done::before {
+        background: var(--accent);
+      }
+      .steps .now {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .steps .now::before {
+        background: linear-gradient(
+          90deg,
+          var(--accent) 0 50%,
+          var(--line-2) 50%
+        );
+        background-size: 200% 100%;
+        animation: chay 2.4s linear infinite;
+      }
+      @keyframes chay {
+        from {
+          background-position: 100% 0;
+        }
+        to {
+          background-position: 0 0;
+        }
+      }
+      .soon-note {
+        font: 600 13px var(--mono);
+        color: var(--ink-2);
+      }
+      .lab h2 {
+        margin-top: 88px;
+      }
+      .lab-sub {
+        margin: -8px 0 28px;
+        color: var(--ink-2);
+      }
+      .app-card.dev .body {
+        margin-top: 0;
+        padding-top: 24px;
+      }
+      .app-card.dev .icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 15px;
+      }
+      .icon.letter {
+        display: grid;
+        place-items: center;
+        font-size: 26px;
+        font-weight: 800;
+        color: #0b0b10;
+        background: var(--accent);
+      }
+      .app-card.dev h3 {
+        font-size: 20px;
+      }
+      .state {
+        grid-column: 1 / -1;
+        margin: 14px 0 0;
+        font-size: 14px;
+        color: var(--ink-2);
+      }
+      .state b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+
       /* ---------- liên hệ ---------- */
       .contact {
         position: relative;
@@ -1109,7 +1207,7 @@
           ><span class="mark" aria-hidden="true">D</span>Dzuy Phạm Store</a
         >
         <nav aria-label="Chính">
-          <a href="#apps">Ứng dụng</a><a href="#contact">Liên hệ</a>
+          <a href="#apps">Ứng dụng</a><a href="#lab">Đang làm</a><a href="#contact">Liên hệ</a>
         </nav>
       </div>
     </header>
@@ -1187,13 +1285,13 @@
 
       <section id="apps">
         <div class="wrap">
-          <h2 data-reveal>Đã lên store.</h2>
+          <h2 data-reveal>Ứng dụng.</h2>
           <ul class="app-grid">
             <li class="app-card" style="--accent: #e0a458" data-reveal>
               <div class="halo" aria-hidden="true"></div>
               <div class="shell">
                 <div class="cover">
-                  <span class="tag-live">trên Google Play</span>
+                  <span class="tag-live">trên Google Play · v1.3.1</span>
                   <img
                     src="gomo/img/gomo-co_tuong.jpg"
                     width="506"
@@ -1218,6 +1316,9 @@
                     <li>10 bộ mõ</li>
                     <li>widget</li>
                   </ul>
+                  <ol class="steps" aria-label="Tình trạng: Đã lên Google Play">
+                    <li class="done">Ý tưởng</li><li class="done">Đang code</li><li class="done">Thử nghiệm kín</li><li class="done">Google Play</li>
+                  </ol>
                   <div class="row">
                     <a
                       class="play"
@@ -1246,14 +1347,106 @@
                 </div>
               </div>
             </li>
-            <li class="app-card soon" data-reveal style="--d: 120ms">
+            <li class="app-card" style="--accent: #60a5fa; --d: 120ms" data-reveal>
+              <div class="halo" aria-hidden="true"></div>
               <div class="shell">
-                <div class="lo" aria-hidden="true">
-                  <i></i><i></i><i></i><b>v0.1</b>
+                <div class="cover">
+                  <span class="tag-live test">thử nghiệm kín · v1.1.0</span>
+                  <img
+                    src="img/ecc-cover.jpg"
+                    width="604"
+                    height="420"
+                    alt=""
+                    loading="lazy"
+                  />
                 </div>
-                <h3>
-                  Đang trong lò<span class="cham" aria-hidden="true"></span>
-                </h3>
+                <div class="body">
+                  <img
+                    class="icon"
+                    src="img/ecc-icon.png"
+                    width="68"
+                    height="68"
+                    alt=""
+                  />
+                  <h3>Edge Control Center</h3>
+                  <p class="tagline">Vuốt từ mép màn hình, bảng điều khiển trượt ra.</p>
+                  <ul class="chips">
+                    <li>Android</li>
+                    <li>46 theme</li>
+                    <li>17 ngôn ngữ</li>
+                  </ul>
+                  <ol class="steps" aria-label="Tình trạng: Thử nghiệm kín">
+                    <li class="done">Ý tưởng</li><li class="done">Đang code</li><li class="now">Thử nghiệm kín</li><li>Google Play</li>
+                  </ol>
+                  <div class="row">
+                    <span class="soon-note">sắp lên Google Play</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="lab" class="lab">
+        <div class="wrap">
+          <h2 data-reveal>Đang làm.</h2>
+          <p class="lab-sub" data-reveal>Chưa lên store. Cập nhật 11/11/2026.</p>
+          <ul class="app-grid">
+            <li class="app-card dev" style="--accent: #f472b6; --d: 0ms" data-reveal>
+              <div class="halo" aria-hidden="true"></div>
+              <div class="shell">
+                <div class="body">
+                  <img class="icon" src="img/wallrobe-icon.png" width="56" height="56" alt="" />
+                  <h3>Wallrobe</h3>
+                  <p class="tagline">Bộ widget và hình nền theo chủ đề cho màn hình chính.</p>
+                  <ol class="steps" aria-label="Tình trạng: Thử nghiệm kín">
+                    <li class="done">Ý tưởng</li><li class="done">Đang code</li><li class="now">Thử nghiệm kín</li><li>Google Play</li>
+                  </ol>
+                  <p class="state"><b>Thử nghiệm kín · v1.0.0.</b> Đang chuẩn bị xin phát hành công khai.</p>
+                </div>
+              </div>
+            </li>
+            <li class="app-card dev" style="--accent: #f87171; --d: 120ms" data-reveal>
+              <div class="halo" aria-hidden="true"></div>
+              <div class="shell">
+                <div class="body">
+                  <span class="icon letter" aria-hidden="true">T</span>
+                  <h3>Tết Đến Rồi</h3>
+                  <p class="tagline">Đếm ngày tới Tết, giữ kỉ niệm cả năm.</p>
+                  <ol class="steps" aria-label="Tình trạng: Đang code">
+                    <li class="done">Ý tưởng</li><li class="now">Đang code</li><li>Thử nghiệm kín</li><li>Google Play</li>
+                  </ol>
+                  <p class="state"><b>Đang code · v1.0.0.</b> Đã có các màn chính, chưa thử trên máy thật.</p>
+                </div>
+              </div>
+            </li>
+            <li class="app-card dev" style="--accent: #4ade80; --d: 240ms" data-reveal>
+              <div class="halo" aria-hidden="true"></div>
+              <div class="shell">
+                <div class="body">
+                  <span class="icon letter" aria-hidden="true">F</span>
+                  <h3>FitVibe</h3>
+                  <p class="tagline">Theo dõi chạy bộ bằng GPS và đếm calo đồ ăn bằng ảnh.</p>
+                  <ol class="steps" aria-label="Tình trạng: Đang code">
+                    <li class="done">Ý tưởng</li><li class="now">Đang code</li><li>Thử nghiệm kín</li><li>Google Play</li>
+                  </ol>
+                  <p class="state"><b>Bản chạy thử.</b> Đã có chạy bộ, quét đồ ăn, widget.</p>
+                </div>
+              </div>
+            </li>
+            <li class="app-card dev" style="--accent: #fbbf24; --d: 360ms" data-reveal>
+              <div class="halo" aria-hidden="true"></div>
+              <div class="shell">
+                <div class="body">
+                  <img class="icon" src="img/shiba-icon.png" width="56" height="56" alt="" />
+                  <h3>Shiba Wallet</h3>
+                  <p class="tagline">Ghi chi tiêu cá nhân, dữ liệu chỉ nằm trên máy.</p>
+                  <ol class="steps" aria-label="Tình trạng: Ý tưởng">
+                    <li class="now">Ý tưởng</li><li>Đang code</li><li>Thử nghiệm kín</li><li>Google Play</li>
+                  </ol>
+                  <p class="state"><b>Mới dựng khung.</b> Đã chốt hướng sản phẩm, chưa có tính năng.</p>
+                </div>
               </div>
             </li>
           </ul>
